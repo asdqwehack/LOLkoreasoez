@@ -1,0 +1,34 @@
+local function FindChildObjectWithParent(parentObjectName, childObjectName)
+    local parentParts = workspace:GetChildren() 
+
+    for _, parentPart in ipairs(parentParts) do
+        if parentPart.Name == parentObjectName then
+            local childPart = parentPart:FindFirstChild(childObjectName) 
+            if childPart then
+                return childPart 
+            end
+        end
+    end
+
+    return nil 
+end
+
+local partName = "Part"
+local childName = "PK"
+
+while true do
+    local childPart = FindChildObjectWithParent(partName, childName)
+    if childPart then
+        print("Part:", childPart)
+
+        local player = game.Players.LocalPlayer
+        local humanoid = player.Character and player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid:EquipTool(childPart)
+        end
+    else
+        print("no")
+    end
+
+    wait() 
+end
